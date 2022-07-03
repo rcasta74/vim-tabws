@@ -30,7 +30,9 @@ augroup TabWS
   autocmd! TabNew * call s:tabws_tabnew()
   autocmd! TabEnter * call s:tabws_tabenter()
   autocmd! TabLeave * call s:tabws_tableave()
-  autocmd! TabNewEntered * call s:tabws_tabnewentered()
+  if exists("#TabNewEntered")
+    autocmd! TabNewEntered * call s:tabws_tabnewentered()
+  endif
   autocmd! TabClosed * call s:tabws_tabclosed(expand('<afile>'))
   autocmd! BufEnter * call s:tabws_bufenter()
   autocmd! BufCreate * call s:tabws_bufcreate()
