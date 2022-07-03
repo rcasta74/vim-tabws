@@ -62,7 +62,10 @@ if exists("*fzf#run")
 endif
 
 function! s:tabws_edit(...)
-  exec ":edit " . join(a:000, " ")
+  for fname in a:000
+    let fname = fnameescape(fname)
+    exec ":badd" fname
+  endfor
 endfunction
 
 function! s:tabws_buffernamecomplete(ArgLead, CmdLine, CursorPos)
@@ -152,6 +155,7 @@ endfunction
 
 function! s:tabws_bufadd(bufnum)
   "echom "BufAdd " . tabpagenr() . " " . bufnr(a:bufnum) . " " . bufname(a:bufnum)
+  call tabws#setup_buffer(bufnr(a:bufnum))
 endfunction
 
 function! s:tabws_bufnew(bufnum)

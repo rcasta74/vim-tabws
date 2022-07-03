@@ -98,14 +98,13 @@ function! tabws#setup_buffer(bufnum)
   let tab = tabws#findtabbyprojectroot(projectroot#guess(resolve(expand(fnamemodify(bufname(a:bufnum), ":p:~:.")))))
   "echom "found tab by project root: " . tab . " for bufname: " . resolve(expand(fnamemodify(bufname(a:bufnum), ":p:~:.")))
   if tab == -1
-    exec ":tabedit ". bufname(a:bufnum)
-    call tabws#setup_tab(tabpagenr('$'))
-    call tabws#associatebufferwithtab(tabpagenr('$'), a:bufnum)
-    call tabws#setcurrentbufferfortab(tabpagenr('$'), a:bufnum)
-    return tabpagenr('$')
+    exec ":$tab sb" a:bufnum
+    let tab = tabpagenr('$')
+    call tabws#setup_tab(tab)
   else
-    call tabws#associatebufferwithtab(tab, a:bufnum)
+    exec tab."tabn"
   endif
+  call tabws#associatebufferwithtab(tab, a:bufnum)
   call tabws#setcurrentbufferfortab(tab, a:bufnum)
   return tab
 endfunction
